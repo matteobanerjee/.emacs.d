@@ -34,7 +34,6 @@
 (color-theme-solarized-dark)
 (require 'ensime)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom Key Bindings ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -55,7 +54,7 @@
 (show-paren-mode t)
 (ido-mode t)
 (ido-vertical-mode t)
-
+(yas-global-mode t)
 
 ;;;;;;;;;;;;;
 ;; Display ;;
