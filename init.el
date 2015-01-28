@@ -44,9 +44,9 @@
 (show-paren-mode t)
 (helm-mode 1)
 (helm-autoresize-mode t)
-
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
+(yas-global-mode t)
 
 (yas-global-mode t)
 ;;;;;;;;;;;
@@ -186,6 +186,7 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
+
 
 ;; IF USING solarized ADD THE FOLLOWING TO solarized-definitions.el
 ;; FROM: https://github.com/sellout/emacs-color-theme-solarized/commit/5a63acf27172cd40a79b6cbdb5f0f9181861ec99
