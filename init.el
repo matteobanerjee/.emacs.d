@@ -6,12 +6,11 @@
   (message "Your Emacs is too old, update to emacs 24"))
 
 (require 'package)
-
-(setq package-list '(color-theme
-                     color-theme-solarized
+(setq package-list '(monokai-theme
                      ensime
                      flycheck
                      helm
+                     helm-c-yasnippet
                      magit
                      markdown-mode
                      mvn
@@ -37,16 +36,19 @@
 (require 'neotree)
 (require 'helm-config)
 
-(require 'color-theme)
-(color-theme-solarized-dark)
+(load-theme 'monokai t)
 
 (require 'flycheck)
 (setq linum-format "%3d ")
 (global-linum-mode t)
 (show-paren-mode t)
 (helm-mode 1)
-(yas-global-mode t)
+(helm-autoresize-mode t)
 
+(setq helm-yas-space-match-any-greedy t) ;[default: nil]
+(global-set-key (kbd "C-c y") 'helm-yas-complete)
+
+(yas-global-mode t)
 ;;;;;;;;;;;
 ;; Scala ;;
 ;;;;;;;;;;;
@@ -127,6 +129,9 @@
    (progn (copy-file filename newname 1) (delete-file filename)
           (set-visited-file-name newname) (set-buffer-modified-p nil) t))))
 
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
 ;;;;;;;;;;;;;
 ;; Display ;;
 ;;;;;;;;;;;;;
@@ -145,7 +150,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default))))
+ '(custom-safe-themes
+   (quote
+    ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "31a01668c84d03862a970c471edbd377b2430868eccf5e8a9aec6831f1a0908d" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
+ '(nxml-child-indent 4))
 
 ;; Disable toolbars
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -179,8 +187,7 @@
    kept-old-versions 2
    version-control t)
 
-
-;; ADD THE FOLLOWING TO solarized-definitions.el
+;; IF USING solarized ADD THE FOLLOWING TO solarized-definitions.el
 ;; FROM: https://github.com/sellout/emacs-color-theme-solarized/commit/5a63acf27172cd40a79b6cbdb5f0f9181861ec99
 ;; (helm-action ((t (,@fmt-undr))))
 ;; (helm-apt-deinstalled ((t (,@fg-base01))))
@@ -238,4 +245,3 @@
 ;; (helm-time-zone-home ((t (,@fg-red))))
 ;; (helm-visible-mark ((t (,@fmt-bold ,@bg-back ,@fg-magenta))))
 ;; (helm-w3m-bookmarks ((t (:inherit helm-bookmark-w3m))))
-
