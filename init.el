@@ -6,7 +6,7 @@
   (message "Your Emacs is too old, update to emacs 24"))
 
 (require 'package)
-(setq package-list '(moe-theme
+(setq package-list '(
                      powerline
                      ensime
                      flycheck
@@ -43,7 +43,9 @@
 (require 'yaml-mode)
 (require 'powerline)
 
+(add-to-list 'load-path "~/.emacs.d/themes/moe-theme/")
 (require 'moe-theme)
+(setq moe-theme-mode-line-color 'w/b)
 (moe-dark)
 (powerline-moe-theme)
 (powerline-center-theme)
@@ -209,4 +211,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Menlo")))))
+ '(default ((t (:strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "nil" :family "Menlo")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#1c1c1c" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
+ '(custom-safe-themes
+   (quote
+    ("0661d77770080767c9317446c6cb31e3aa351148b9e388c798318853361f6f5d" "90875daaf9fabcad8c209a522b329ac4affb52456d99311d567cfc537ee087a0" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" default))))
