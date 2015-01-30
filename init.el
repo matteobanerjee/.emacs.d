@@ -6,7 +6,8 @@
   (message "Your Emacs is too old, update to emacs 24"))
 
 (require 'package)
-(setq package-list '(monokai-theme
+(setq package-list '(moe-theme
+                     powerline
                      ensime
                      flycheck
                      helm
@@ -14,9 +15,13 @@
                      magit
                      markdown-mode
                      mvn
+                     projectile
+                     projectile-rails
+                     rainbow-mode
                      neotree
                      thrift
-                     yasnippet))
+                     yasnippet
+                     yaml-mode))
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
@@ -30,28 +35,46 @@
     (package-install package)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; General Preferences ;;
+;;General Preferences ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'neotree)
 (require 'helm-config)
+(require 'yaml-mode)
+(require 'powerline)
 
-(load-theme 'monokai t)
+(require 'moe-theme)
+(moe-dark)
+(powerline-moe-theme)
+(powerline-center-theme)
+
+;; For working on custom themes
+(defun what-face (pos)
+  (interactive "d")
+  (let ((face (or (get-char-property (point) 'read-face-name)
+                  (get-char-property (point) 'face))))
+    (if face (message "Face: %s" face) (message "No face at %d" pos))))
+(require 'rainbow-mode)
 
 (require 'flycheck)
-(setq linum-format "%3d ")
-(global-linum-mode t)
+;; when using powerline linum mode is less important
+;; (setq linum-format "%3d")
+;; (global-linum-mode t)
 (show-paren-mode t)
+(setq show-paren-style 'expression)
 (helm-mode 1)
 (helm-autoresize-mode t)
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 (yas-global-mode t)
 
-(yas-global-mode t)
 ;;;;;;;;;;;
 ;; Scala ;;
 ;;;;;;;;;;;
+;; Make ensime work in OS X Emacs.app
+(setq exec-path (append exec-path '("/usr/local/bin")))
+(setq exec-path (append exec-path '("/usr/local/sbin")))
+(setenv "PATH" (shell-command-to-string "/bin/bash -l -c 'echo -n $PATH'"))
 
 (require 'ensime)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
@@ -75,6 +98,8 @@
 ;;;;;;;;;;
 
 (add-hook 'ruby-mode-hook 'flycheck-mode)
+(add-hook 'ruby-mode-hook 'projectile-mode)
+(add-hook 'projectile-mode-hook 'projectile-rails-on)
 
 ;;;;;;;;;;;;;;;;;;
 ;; Key Bindings ;;
@@ -145,19 +170,11 @@
 (setq whitespace-display-mappings
  '((tab-mark 9 [9654 9] [92 9])))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "31a01668c84d03862a970c471edbd377b2430868eccf5e8a9aec6831f1a0908d" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
- '(nxml-child-indent 4))
 
 ;; Disable toolbars
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;;;;;;;;;;;;;;;;;;
 ;; Backup Files ;;
@@ -187,62 +204,9 @@
    kept-old-versions 2
    version-control t)
 
-
-;; IF USING solarized ADD THE FOLLOWING TO solarized-definitions.el
-;; FROM: https://github.com/sellout/emacs-color-theme-solarized/commit/5a63acf27172cd40a79b6cbdb5f0f9181861ec99
-;; (helm-action ((t (,@fmt-undr))))
-;; (helm-apt-deinstalled ((t (,@fg-base01))))
-;; (helm-apt-installed ((t (,@fg-green))))
-;; (helm-bookmark-addressbook ((t (,@fg-blue))))
-;; (helm-bookmark-directory ((t (:inherit helm-ff-directory))))
-;; (helm-bookmark-file ((t (:inherit helm-ff-file))))
-;; (helm-bookmark-gnus ((t (,@fg-cyan))))
-;; (helm-bookmark-info ((t (,@fg-green))))
-;; (helm-bookmark-man ((t (,@fg-violet))))
-;; (helm-bookmark-w3m ((t (,@fg-yellow))))
-;; (helm-bookmarks-su ((t (,@fg-orange))))
-;; (helm-buffer-not-saved ((t (,@fg-orange))))
-;; (helm-buffer-process ((t (,@fg-magenta))))
-;; (helm-buffer-saved-out ((t (,@fmt-revr ,@fg-red ,@bg-back))))
-;; (helm-buffer-size ((t (,@fg-base01))))
-;; (helm-candidate-number ((t (,@fmt-bold ,@bg-base02 ,@fg-base1))))
-;; (helm-emms-playlist ((t (,@fmt-none ,@fg-base01))))
-;; (helm-etags+-highlight-face ((t (:inherit highlight))))
-;; (helm-ff-directory ((t (,@bg-back ,@fg-blue))))
-;; (helm-ff-executable ((t (,@fmt-bold ,@fg-green))))
-;; (helm-ff-file ((t (:inherit default))))
-;; (helm-ff-invalid-symlink ((t (,@bg-base02 ,@fg-red))))
-;; (helm-ff-prefix ((t (,@bg-yellow :foreground ,back))))
-;; (helm-ff-symlink ((t (,@fmt-bold ,@fg-cyan))))
-;; (helm-gentoo-match ((t (:inherit helm-match))))
-;; (helm-grep-cmd-line ((t (:inherit diff-added))))
-;; (helm-grep-file ((t (,@fmt-undr ,@fg-cyan))))
-;; (helm-grep-finish ((t (,@fg-green))))
-;; (helm-grep-lineno ((t (,@fg-orange))))
-;; (helm-grep-match ((t (:inherit helm-match))))
-;; (helm-grep-running ((t (,@fg-red))))
-;; (helm-header ((t (:inherit header-line))))
-;; (helm-helper ((t (:inherit helm-header))))
-;; (helm-history-deleted ((t (:inherit helm-ff-invalid-symlink))))
-;; (helm-history-remote ((t (,@fg-red))))
-;; (helm-lisp-completion-info ((t (,@fg-base0))))
-;; (helm-lisp-show-completion ((t (,@fmt-bold ,@fg-yellow  ,@bg-base02))))
-;; (helm-ls-git-added-copied-face ((t (,@fg-green))))
-;; (helm-ls-git-conflict-face ((t (,@fmt-bold ,@fg-red))))
-;; (helm-ls-git-deleted-and-staged-face ((t (,@fmt-ital ,@fg-base01))))
-;; (helm-ls-git-deleted-not-staged-face ((t (,@fmt-bold ,@fg-green))))
-;; (helm-ls-git-modified-and-staged-face ((t (,@fmt-ital ,@fg-base01))))
-;; (helm-ls-git-modified-not-staged-face ((t (,@fmt-ital ,@fg-base01))))
-;; (helm-ls-git-renamed-modified-face ((t (,@fg-green))))
-;; (helm-ls-git-untracked-face ((t (,@fg-red))))
-;; (helm-M-x-key ((t (,@fmt-undr ,@fg-orange))))
-;; (helm-match ((t (,@fmt-bold ,@fg-base1 ,@bg-base02))))
-;; (helm-moccur-buffer ((t (,@fmt-undr ,@fg-cyan))))
-;; (helm-selection ((t (,@fmt-undr ,@bg-base02))))
-;; (helm-selection-line ((t (,@bg-base02 ,@fg-base1))))
-;; (helm-separator ((t (,@fg-red))))
-;; (helm-source-header ((t (:inherit helm-header))))
-;; (helm-time-zone-current ((t (,@fg-green))))
-;; (helm-time-zone-home ((t (,@fg-red))))
-;; (helm-visible-mark ((t (,@fmt-bold ,@bg-back ,@fg-magenta))))
-;; (helm-w3m-bookmarks ((t (:inherit helm-bookmark-w3m))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Menlo")))))
