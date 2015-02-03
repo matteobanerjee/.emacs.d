@@ -7,7 +7,7 @@
 
 (require 'package)
 (setq package-list '(
-                     powerline
+		     expand-region
                      ensime
                      flycheck
                      helm
@@ -17,11 +17,12 @@
                      mvn
                      projectile
                      projectile-rails
+		     powerline
                      rainbow-mode
                      neotree
                      thrift
-                     yasnippet
-                     yaml-mode))
+                     yaml-mode
+		     yasnippet))
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
@@ -43,11 +44,14 @@
 (require 'yaml-mode)
 (require 'powerline)
 
-(add-to-list 'load-path "~/.emacs.d/themes/moe-theme/")
-(require 'moe-theme)
-(setq moe-theme-mode-line-color 'w/b)
-(moe-dark)
-(powerline-moe-theme)
+(add-to-list 'custom-theme-load-path "~/source/personal/minimo-2/")
+(add-to-list 'custom-theme-load-path "~/source/personal/minimo-theme/")
+
+;; (require 'moe-theme)
+;; (setq moe-theme-mode-line-color 'w/b)
+;; (moe-dark)
+;; (powerline-moe-theme)
+(load-theme 'tiber t)
 (powerline-center-theme)
 
 ;; For working on custom themes
@@ -69,6 +73,9 @@
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 (yas-global-mode t)
+
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 ;;;;;;;;;;;
 ;; Scala ;;
@@ -221,4 +228,26 @@
    ["#1c1c1c" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
  '(custom-safe-themes
    (quote
-    ("0661d77770080767c9317446c6cb31e3aa351148b9e388c798318853361f6f5d" "90875daaf9fabcad8c209a522b329ac4affb52456d99311d567cfc537ee087a0" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" default))))
+    ("3b94bef8463fff8d110f9093e3fa9f2f4be7d8675f348431c993f0e5f2c4f2da" "70b00f112d2beb190e8506d5a026bf8b1527b5b8f1d8d43602af28180ab6fa99" "68c210a131110b74cd5477f44488e582d72133de058cb22dde4d258591095c48" "27bb4abf8f61fb2f78febfbd069bc9c754d22ed041b496b2e22cd3f6e27b407f" "d8fdbac19ec094486ea90e85daa0a32c07ebf3a4e50f819cb4372462a8bfd59c" "309a4ebfaf88262a2ce2228180677bf68495bc1aa391c7b9a5fbaf41d1ca7fa7" "0a8c661f1e755fb558fc826f9a9a670f28501a4c2e5cd118ec59a402da78898c" "d87c1b9b33fff049f3ea43cf173ba218bd9d6e0c0953b867e7a98683c4cab1d9" "70f1381b8b38a7e4b694b29f3bc217115c28056d8a8d64f2d7620fb8bd383dc1" "75fa3d1e9df3ad793838f8776aae175ec96405c4f3863e171102aca8366a3451" "0661d77770080767c9317446c6cb31e3aa351148b9e388c798318853361f6f5d" "90875daaf9fabcad8c209a522b329ac4affb52456d99311d567cfc537ee087a0" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" default)))
+ '(fci-rule-color "#a8a8a8")
+ '(vc-annotate-background "#202020")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#a40000")
+     (40 . "#dd0000")
+     (60 . "#ff8700")
+     (100 . "#ffad00")
+     (120 . "#ffd700")
+     (140 . "#8abd00")
+     (160 . "#9cd700")
+     (180 . "#9cd700")
+     (200 . "#afff00")
+     (220 . "#bdf800")
+     (240 . "#bdff0b")
+     (260 . "#87d7af")
+     (280 . "#79ADB0")
+     (300 . "#89C5C8")
+     (320 . "#5fafd7")
+     (340 . "#9CC7FB")
+     (360 . "#c61b6e"))))
+ '(vc-annotate-very-old-color "#c61b6e"))
