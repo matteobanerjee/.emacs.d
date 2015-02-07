@@ -7,9 +7,10 @@
 
 (require 'package)
 (setq package-list '(
-		     expand-region
+                     expand-region
                      ensime
                      flycheck
+                     haskell-mode
                      helm
                      helm-c-yasnippet
                      magit
@@ -17,12 +18,12 @@
                      mvn
                      projectile
                      projectile-rails
-		     powerline
+                     powerline
                      rainbow-mode
                      neotree
                      thrift
                      yaml-mode
-		     yasnippet))
+                     yasnippet))
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
@@ -44,15 +45,10 @@
 (require 'yaml-mode)
 (require 'powerline)
 
-(add-to-list 'custom-theme-load-path "~/source/personal/minimo-2/")
-(add-to-list 'custom-theme-load-path "~/source/personal/minimo-theme/")
-
-;; (require 'moe-theme)
-;; (setq moe-theme-mode-line-color 'w/b)
-;; (moe-dark)
-;; (powerline-moe-theme)
-(load-theme 'tiber t)
-(powerline-center-theme)
+(require 'moe-theme)
+(setq moe-theme-mode-line-color 'w/b)
+(moe-dark)
+(powerline-moe-theme)
 
 ;; For working on custom themes
 (defun what-face (pos)
