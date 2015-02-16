@@ -1,3 +1,6 @@
 [submodule "moe-theme.el"]
 	path = moe-theme.el
 	url = git@github.com:matteobanerjee/moe-theme.el.git
+[submodule "themes/orpheus-theme"]
+	path = themes/orpheus-theme
+	url = git@github.com:matteobanerjee/orpheus-theme.git
