@@ -58,6 +58,7 @@
 (require 'rainbow-mode)
 
 (require 'flycheck)
+(setq indent-tabs-mode nil)
 ;; when using powerline linum mode is less important
 ;; (setq linum-format "%3d")
 ;; (global-linum-mode t)
@@ -104,6 +105,15 @@
 (add-hook 'ruby-mode-hook 'flycheck-mode)
 (add-hook 'ruby-mode-hook 'projectile-mode)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
+
+;;;;;;;;;
+;; XML ;;
+;;;;;;;;;
+
+(setq
+ nxml-child-indent 4
+ nxml-attribute-indent 4
+ nxml-slash-auto-complete-flag t)
 
 ;;;;;;;;;;;;;;;;;;
 ;; Key Bindings ;;
