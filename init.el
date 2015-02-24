@@ -46,10 +46,8 @@
 
 ;; color theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/orpheus-theme/")
-(require 'moe-theme)
-(setq moe-theme-mode-line-color 'w/b)
-(moe-dark)
-(powerline-moe-theme)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/minimo-theme/")
+(load-theme 'minimo t)
 
 ;; For working on custom themes
 (defun what-face (pos)

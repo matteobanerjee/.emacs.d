@@ -4,3 +4,6 @@
 [submodule "themes/orpheus-theme"]
 	path = themes/orpheus-theme
 	url = git@github.com:matteobanerjee/orpheus-theme.git
+[submodule "themes/minimo-theme"]
+	path = themes/minimo-theme
+	url = git@github.com:matteobanerjee/minimo-theme.git
