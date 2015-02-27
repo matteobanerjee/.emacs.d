@@ -48,7 +48,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/orpheus-theme/")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/minimo-theme/")
 (load-theme 'minimo t)
-
+(powerline-default-theme)
 ;; For working on custom themes
 (defun what-face (pos)
   (interactive "d")
