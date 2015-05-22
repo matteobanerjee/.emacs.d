@@ -14,11 +14,13 @@
                      helm-c-yasnippet
                      magit
                      markdown-mode
+		     monokai-theme
                      mvn
                      projectile
                      projectile-rails
                      powerline
                      rainbow-mode
+		     spacegray-theme
                      neotree
                      thrift
                      yaml-mode
@@ -47,7 +49,7 @@
 ;; color theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/orpheus-theme/")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/minimo-theme/")
-(load-theme 'minimo t)
+(load-theme 'monokai t)
 (powerline-default-theme)
 ;; For working on custom themes
 (defun what-face (pos)
@@ -235,6 +237,13 @@
    (quote
     ("58bc69893f1ec4ff5561a8995e7e2227d4f04ca5285362072543b6458ed08532" "3b94bef8463fff8d110f9093e3fa9f2f4be7d8675f348431c993f0e5f2c4f2da" "70b00f112d2beb190e8506d5a026bf8b1527b5b8f1d8d43602af28180ab6fa99" "68c210a131110b74cd5477f44488e582d72133de058cb22dde4d258591095c48" "27bb4abf8f61fb2f78febfbd069bc9c754d22ed041b496b2e22cd3f6e27b407f" "d8fdbac19ec094486ea90e85daa0a32c07ebf3a4e50f819cb4372462a8bfd59c" "309a4ebfaf88262a2ce2228180677bf68495bc1aa391c7b9a5fbaf41d1ca7fa7" "0a8c661f1e755fb558fc826f9a9a670f28501a4c2e5cd118ec59a402da78898c" "d87c1b9b33fff049f3ea43cf173ba218bd9d6e0c0953b867e7a98683c4cab1d9" "70f1381b8b38a7e4b694b29f3bc217115c28056d8a8d64f2d7620fb8bd383dc1" "75fa3d1e9df3ad793838f8776aae175ec96405c4f3863e171102aca8366a3451" "0661d77770080767c9317446c6cb31e3aa351148b9e388c798318853361f6f5d" "90875daaf9fabcad8c209a522b329ac4affb52456d99311d567cfc537ee087a0" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" default)))
  '(fci-rule-color "#a8a8a8")
+ '(safe-local-variable-values
+   (quote
+    ((eval when
+	   (require
+	    (quote rainbow-mode)
+	    nil t)
+	   (rainbow-mode 1)))))
  '(vc-annotate-background "#202020")
  '(vc-annotate-color-map
    (quote
