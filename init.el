@@ -14,13 +14,13 @@
                      helm-c-yasnippet
                      magit
                      markdown-mode
-		     monokai-theme
+                     monokai-theme
                      mvn
                      projectile
                      projectile-rails
                      powerline
                      rainbow-mode
-		     spacegray-theme
+                     spacegray-theme
                      neotree
                      thrift
                      yaml-mode
@@ -107,6 +107,14 @@
 (add-hook 'ruby-mode-hook 'flycheck-mode)
 (add-hook 'ruby-mode-hook 'projectile-mode)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
+
+;;;;;;;;;;;;;
+;; Haskell ;;
+;;;;;;;;;;;;;
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;;;;;;;;;
 ;; XML ;;
@@ -233,17 +241,30 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#1c1c1c" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
+ '(compilation-message-face (quote default))
  '(custom-safe-themes
    (quote
-    ("58bc69893f1ec4ff5561a8995e7e2227d4f04ca5285362072543b6458ed08532" "3b94bef8463fff8d110f9093e3fa9f2f4be7d8675f348431c993f0e5f2c4f2da" "70b00f112d2beb190e8506d5a026bf8b1527b5b8f1d8d43602af28180ab6fa99" "68c210a131110b74cd5477f44488e582d72133de058cb22dde4d258591095c48" "27bb4abf8f61fb2f78febfbd069bc9c754d22ed041b496b2e22cd3f6e27b407f" "d8fdbac19ec094486ea90e85daa0a32c07ebf3a4e50f819cb4372462a8bfd59c" "309a4ebfaf88262a2ce2228180677bf68495bc1aa391c7b9a5fbaf41d1ca7fa7" "0a8c661f1e755fb558fc826f9a9a670f28501a4c2e5cd118ec59a402da78898c" "d87c1b9b33fff049f3ea43cf173ba218bd9d6e0c0953b867e7a98683c4cab1d9" "70f1381b8b38a7e4b694b29f3bc217115c28056d8a8d64f2d7620fb8bd383dc1" "75fa3d1e9df3ad793838f8776aae175ec96405c4f3863e171102aca8366a3451" "0661d77770080767c9317446c6cb31e3aa351148b9e388c798318853361f6f5d" "90875daaf9fabcad8c209a522b329ac4affb52456d99311d567cfc537ee087a0" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" default)))
+    ("05c3bc4eb1219953a4f182e10de1f7466d28987f48d647c01f1f0037ff35ab9a" "58bc69893f1ec4ff5561a8995e7e2227d4f04ca5285362072543b6458ed08532" "3b94bef8463fff8d110f9093e3fa9f2f4be7d8675f348431c993f0e5f2c4f2da" "70b00f112d2beb190e8506d5a026bf8b1527b5b8f1d8d43602af28180ab6fa99" "68c210a131110b74cd5477f44488e582d72133de058cb22dde4d258591095c48" "27bb4abf8f61fb2f78febfbd069bc9c754d22ed041b496b2e22cd3f6e27b407f" "d8fdbac19ec094486ea90e85daa0a32c07ebf3a4e50f819cb4372462a8bfd59c" "309a4ebfaf88262a2ce2228180677bf68495bc1aa391c7b9a5fbaf41d1ca7fa7" "0a8c661f1e755fb558fc826f9a9a670f28501a4c2e5cd118ec59a402da78898c" "d87c1b9b33fff049f3ea43cf173ba218bd9d6e0c0953b867e7a98683c4cab1d9" "70f1381b8b38a7e4b694b29f3bc217115c28056d8a8d64f2d7620fb8bd383dc1" "75fa3d1e9df3ad793838f8776aae175ec96405c4f3863e171102aca8366a3451" "0661d77770080767c9317446c6cb31e3aa351148b9e388c798318853361f6f5d" "90875daaf9fabcad8c209a522b329ac4affb52456d99311d567cfc537ee087a0" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" default)))
  '(fci-rule-color "#a8a8a8")
+ '(highlight-changes-colors ("#FD5FF0" "#AE81FF"))
+ '(highlight-tail-colors
+   (quote
+    (("#49483E" . 0)
+     ("#67930F" . 20)
+     ("#349B8D" . 30)
+     ("#21889B" . 50)
+     ("#968B26" . 60)
+     ("#A45E0A" . 70)
+     ("#A41F99" . 85)
+     ("#49483E" . 100))))
+ '(magit-diff-use-overlays nil)
  '(safe-local-variable-values
    (quote
     ((eval when
-	   (require
-	    (quote rainbow-mode)
-	    nil t)
-	   (rainbow-mode 1)))))
+           (require
+            (quote rainbow-mode)
+            nil t)
+           (rainbow-mode 1)))))
  '(vc-annotate-background "#202020")
  '(vc-annotate-color-map
    (quote
@@ -264,4 +285,6 @@
      (320 . "#5fafd7")
      (340 . "#9CC7FB")
      (360 . "#c61b6e"))))
- '(vc-annotate-very-old-color "#c61b6e"))
+ '(vc-annotate-very-old-color "#c61b6e")
+ '(weechat-color-list
+   (unspecified "#272822" "#49483E" "#A20C41" "#F92672" "#67930F" "#A6E22E" "#968B26" "#E6DB74" "#21889B" "#66D9EF" "#A41F99" "#FD5FF0" "#349B8D" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
