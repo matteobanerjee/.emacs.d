@@ -6,23 +6,30 @@
   (message "Your Emacs is too old, update to emacs 24"))
 
 (require 'package)
-(setq package-list '(expand-region
+(setq package-list '(auto-complete
+                     cider
+                     clojure-mode
+                     paredit
+                     expand-region
                      ensime
                      flycheck
                      haskell-mode
                      helm
                      helm-c-yasnippet
+                     js2-mode
                      magit
                      markdown-mode
                      monokai-theme
                      mvn
+                     nodejs-repl
                      projectile
                      projectile-rails
                      powerline
                      rainbow-mode
-                     spacegray-theme
                      neotree
                      thrift
+                     tern
+                     tern-auto-complete
                      yaml-mode
                      yasnippet))
 
@@ -36,6 +43,10 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+
+(setq x-select-enable-clipboard t)
+(define-key input-decode-map "\e\eOA" [(meta up)])
+(define-key input-decode-map "\e\eOB" [(meta down)])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;General Preferences ;;
@@ -116,6 +127,22 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
+;;;;;;;;;;;;;;;;
+;; JavaScript ;;
+;;;;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+(setq js2-mode-hook
+      '(lambda () (progn (set-variable 'indent-tabs-mode nil))))
+(add-hook 'js2-mode-hook 'tern-mode)
+(add-hook 'js2-mode-hook 'auto-complete-mode)
+
+          ;; (lambda () (tern-mode t)))
+
+(eval-after-load 'tern
+  '(progn
+     (require 'tern-auto-complete)
+           (tern-ac-setup)))
 ;;;;;;;;;
 ;; XML ;;
 ;;;;;;;;;
