@@ -13,6 +13,8 @@
                      expand-region
                      ensime
                      flycheck
+		     go-mode
+		     go-autocomplete
                      haskell-mode
                      helm
                      helm-c-yasnippet
@@ -174,6 +176,16 @@
  nxml-attribute-indent 4
  nxml-slash-auto-complete-flag t)
 
+;;;;;;;;
+;; GO ;;
+;;;;;;;;
+(defun auto-complete-for-go ()
+  (auto-complete-mode 1))
+(add-hook 'go-mode-hook 'auto-complete-for-go)
+
+(with-eval-after-load 'go-mode
+  (require 'go-autocomplete))
+
 ;;;;;;;;;;;;;;;;;;
 ;; Key Bindings ;;
 ;;;;;;;;;;;;;;;;;;
@@ -235,7 +247,7 @@
 ;;;;;;;;;;;;;
 
 (setq whitespace-style
-  (quote (face trailing tab-mark lines-tail)))
+  (quote (face trailing lines-tail)))
 (add-hook 'find-file-hook 'whitespace-mode)
 
 ;; transform literal tabs into a right-pointing triangle
@@ -313,11 +325,13 @@
     (yaml-mode tern-auto-complete tern thrift neotree rainbow-mode powerline projectile-rails projectile nodejs-repl mvn monokai-theme markdown-mode magit js2-mode helm-c-yasnippet helm haskell-mode flycheck ensime expand-region paredit cider auto-complete)))
  '(safe-local-variable-values
    (quote
-    ((eval when
-           (require
-            (quote rainbow-mode)
-            nil t)
-           (rainbow-mode 1)))))
+    ((haskell-process-use-ghci . t)
+     (haskell-indent-spaces . 4)
+     (eval when
+	   (require
+	    (quote rainbow-mode)
+	    nil t)
+	   (rainbow-mode 1)))))
  '(vc-annotate-background "#202020")
  '(vc-annotate-color-map
    (quote
