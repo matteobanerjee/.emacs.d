@@ -2,34 +2,29 @@
 ;; Packages ;;
 ;;;;;;;;;;;;;;
 
-(when (version<= emacs-version "24")
-  (message "Your Emacs is too old, update to emacs 24"))
-
 (require 'package)
 (setq package-list '(auto-complete
                      cider
                      clojure-mode
                      paredit
                      expand-region
-                     ensime
                      flycheck
-		     go-mode
-		     go-autocomplete
+                     go-mode
+                     go-autocomplete
                      haskell-mode
                      helm
                      helm-c-yasnippet
                      js2-mode
+                     kotlin-mode
                      magit
                      markdown-mode
-                     monokai-theme
                      mvn
                      nodejs-repl
-                     projectile
-                     projectile-rails
                      powerline
+                     racket-mode
                      rainbow-mode
+                     rust-mode
                      neotree
-                     thrift
                      tern
                      tern-auto-complete
                      yaml-mode
@@ -46,10 +41,6 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-(setq x-select-enable-clipboard t)
-(define-key input-decode-map "\e\eOA" [(meta up)])
-(define-key input-decode-map "\e\eOB" [(meta down)])
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;General Preferences ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -59,8 +50,13 @@
 (require 'yaml-mode)
 (require 'powerline)
 
+(setq x-select-enable-clipboard t)
+(define-key input-decode-map "\e\eOA" [(meta up)])
+(define-key input-decode-map "\e\eOB" [(meta down)])
+
+(setq tab-always-indent 'complete)
+
 ;; color theme
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/orpheus-theme/")
 (load-theme 'wombat t)
 ;; (load-theme 'whiteboard t)
 (powerline-default-theme)
@@ -100,38 +96,18 @@
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
-;;;;;;;;;;;
-;; Scala ;;
-;;;;;;;;;;;
-;; Make ensime work in OS X Emacs.app
-(setq exec-path (append exec-path '("/usr/local/bin")))
-(setq exec-path (append exec-path '("/usr/local/sbin")))
-(setenv "PATH" (shell-command-to-string "/bin/bash -l -c 'echo -n $PATH'"))
-
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(add-hook 'scala-mode-hook
-          '(lambda() (set (make-local-variable 'whitespace-line-column) 100)))
-
 ;;;;;;;;;;
 ;; Java ;;
 ;;;;;;;;;;
 (add-hook 'java-mode-hook
           '(lambda() (set (make-local-variable 'whitespace-line-column) 100)))
+
 ;;;;;;;;;;;;
 ;; Python ;;
 ;;;;;;;;;;;;
 
 (add-hook 'python-mode-hook 'flycheck-mode)
 ;; TODO: make ipython default shell
-
-;;;;;;;;;;
-;; Ruby ;;
-;;;;;;;;;;
-
-(add-hook 'ruby-mode-hook 'flycheck-mode)
-(add-hook 'ruby-mode-hook 'projectile-mode)
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
 
 ;;;;;;;;;;;;;
 ;; Haskell ;;
@@ -144,6 +120,7 @@
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
+
 (add-hook 'js2-mode-hook 'flycheck-mode)
 (add-hook 'js2-jsx-mode-hook 'flycheck-mode)
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
@@ -179,6 +156,7 @@
 ;;;;;;;;
 ;; GO ;;
 ;;;;;;;;
+
 (defun auto-complete-for-go ()
   (auto-complete-mode 1))
 (add-hook 'go-mode-hook 'auto-complete-for-go)
@@ -328,10 +306,10 @@
     ((haskell-process-use-ghci . t)
      (haskell-indent-spaces . 4)
      (eval when
-	   (require
-	    (quote rainbow-mode)
-	    nil t)
-	   (rainbow-mode 1)))))
+           (require
+            (quote rainbow-mode)
+            nil t)
+           (rainbow-mode 1)))))
  '(vc-annotate-background "#202020")
  '(vc-annotate-color-map
    (quote
