@@ -36,6 +36,14 @@
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 
+(setq font-use-system-font t)
+(or (file-exists-p package-user-dir)
+    (package-refresh-contents))
+
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
 (package-initialize)
 
 (require 'neotree)
@@ -52,14 +60,6 @@
 ;;General Preferences ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-(setq font-use-system-font t)
-(or (file-exists-p package-user-dir)
-    (package-refresh-contents))
-
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
 
 
 (electric-indent-mode +1)
