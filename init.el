@@ -6,6 +6,7 @@
 (require 'package)
 (setq package-list
       '(auto-complete
+	cmuscheme
         cider
         clojure-mode
         paredit
@@ -35,7 +36,7 @@
         yasnippet))
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-
+(package-initialize)
 (setq font-use-system-font t)
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
@@ -43,8 +44,6 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
-
-(package-initialize)
 
 (require 'neotree)
 (require 'helm-config)
@@ -56,11 +55,10 @@
 (require 'gerbil)
 (require 'gambit)
 
+(ac-config-default)
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;;General Preferences ;;
+;;General Preferences ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 (electric-indent-mode +1)
 
@@ -92,9 +90,6 @@
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (setq indent-tabs-mode nil)
-;; when using powerline linum mode is less important
-;; (setq linum-format "%3d")
-;; (global-linum-mode t)
 (show-paren-mode t)
 ;; (setq show-paren-style 'expression)
 (helm-mode 1)
@@ -102,7 +97,6 @@
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 (yas-global-mode t)
-
 
 (global-set-key (kbd "C-=") 'er/expand-region)
 
