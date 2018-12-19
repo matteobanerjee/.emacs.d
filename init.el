@@ -1,34 +1,39 @@
 ;;;;;;;;;;;;;;
 ;; Packages ;;
 ;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
 (require 'package)
-(setq package-list '(auto-complete
-                     cider
-                     clojure-mode
-                     paredit
-                     expand-region
-                     flycheck
-                     go-mode
-                     go-autocomplete
-                     haskell-mode
-                     helm
-                     helm-c-yasnippet
-                     js2-mode
-                     kotlin-mode
-                     magit
-                     markdown-mode
-                     mvn
-                     nodejs-repl
-                     powerline
-                     racket-mode
-                     rainbow-mode
-                     rust-mode
-                     neotree
-                     tern
-                     tern-auto-complete
-                     yaml-mode
-                     yasnippet))
+(setq package-list
+      '(auto-complete
+	cmuscheme
+        cider
+        clojure-mode
+        paredit
+        expand-region
+        flycheck
+        go-mode
+        go-autocomplete
+        haskell-mode
+        helm
+        helm-c-yasnippet
+        js2-mode
+        kotlin-mode
+        magit
+        markdown-mode
+        multiple-cursors
+        mvn
+        nodejs-repl
+        powerline
+        racket-mode
+        rainbow-mode
+        restclient
+        rust-mode
+        neotree
+        tern
+        tern-auto-complete
+        yaml-mode
+        yasnippet))
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
@@ -49,6 +54,8 @@
 (require 'helm-config)
 (require 'yaml-mode)
 (require 'powerline)
+
+(electric-indent-mode +1)
 
 (setq x-select-enable-clipboard t)
 (define-key input-decode-map "\e\eOA" [(meta up)])
@@ -95,12 +102,6 @@
 
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
-
-;;;;;;;;;;
-;; Java ;;
-;;;;;;;;;;
-(add-hook 'java-mode-hook
-          '(lambda() (set (make-local-variable 'whitespace-line-column) 100)))
 
 ;;;;;;;;;;;;
 ;; Python ;;
@@ -163,6 +164,38 @@
 
 (with-eval-after-load 'go-mode
   (require 'go-autocomplete))
+
+
+;;;;;;;;;;;
+;; Lisps ;;
+;;;;;;;;;;;
+
+(require 'gerbil)
+(require 'gambit)
+
+(setq scheme-default-implementation 'gambit)
+
+(eval-after-load 'scheme
+  '(define-key scheme-mode-map "\t" 'scheme-complete-or-indent))
+
+(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
+(add-hook 'scheme-mode-hook
+  (lambda ()
+    (make-local-variable 'eldoc-documentation-function)
+    (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
+    (eldoc-mode)))
+
+(add-to-list 'tags-table-list (format "%s/%s" (getenv "GERBIL_HOME") "src/TAGS"))
+
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'gerbil-mode-hook           #'enable-paredit-mode)
+
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'gerbil-mode-hook 'turn-on-eldoc-mode)
 
 ;;;;;;;;;;;;;;;;;;
 ;; Key Bindings ;;
@@ -266,70 +299,3 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "nil" :family "Menlo")))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#1c1c1c" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
- '(compilation-message-face (quote default))
- '(custom-safe-themes
-   (quote
-    ("28130127bbf3072c1bbc7652fca7245f186bb417b3b385a5e4da57b895ffe9d8" "75caffa869a4a4a0ed818bfc1923ebae1c5a2519c5d96b03b0e8e88a7bcf731a" "05c3bc4eb1219953a4f182e10de1f7466d28987f48d647c01f1f0037ff35ab9a" "58bc69893f1ec4ff5561a8995e7e2227d4f04ca5285362072543b6458ed08532" "3b94bef8463fff8d110f9093e3fa9f2f4be7d8675f348431c993f0e5f2c4f2da" "70b00f112d2beb190e8506d5a026bf8b1527b5b8f1d8d43602af28180ab6fa99" "68c210a131110b74cd5477f44488e582d72133de058cb22dde4d258591095c48" "27bb4abf8f61fb2f78febfbd069bc9c754d22ed041b496b2e22cd3f6e27b407f" "d8fdbac19ec094486ea90e85daa0a32c07ebf3a4e50f819cb4372462a8bfd59c" "309a4ebfaf88262a2ce2228180677bf68495bc1aa391c7b9a5fbaf41d1ca7fa7" "0a8c661f1e755fb558fc826f9a9a670f28501a4c2e5cd118ec59a402da78898c" "d87c1b9b33fff049f3ea43cf173ba218bd9d6e0c0953b867e7a98683c4cab1d9" "70f1381b8b38a7e4b694b29f3bc217115c28056d8a8d64f2d7620fb8bd383dc1" "75fa3d1e9df3ad793838f8776aae175ec96405c4f3863e171102aca8366a3451" "0661d77770080767c9317446c6cb31e3aa351148b9e388c798318853361f6f5d" "90875daaf9fabcad8c209a522b329ac4affb52456d99311d567cfc537ee087a0" "1cd9defef2a98138c732728568b04043afd321eb802d25a254777de9b2463768" default)))
- '(fci-rule-color "#a8a8a8")
- '(highlight-changes-colors ("#FD5FF0" "#AE81FF"))
- '(highlight-tail-colors
-   (quote
-    (("#49483E" . 0)
-     ("#67930F" . 20)
-     ("#349B8D" . 30)
-     ("#21889B" . 50)
-     ("#968B26" . 60)
-     ("#A45E0A" . 70)
-     ("#A41F99" . 85)
-     ("#49483E" . 100))))
- '(js-indent-level 2)
- '(magit-diff-use-overlays nil)
- '(package-selected-packages
-   (quote
-    (yaml-mode tern-auto-complete tern thrift neotree rainbow-mode powerline projectile-rails projectile nodejs-repl mvn monokai-theme markdown-mode magit js2-mode helm-c-yasnippet helm haskell-mode flycheck ensime expand-region paredit cider auto-complete)))
- '(safe-local-variable-values
-   (quote
-    ((haskell-process-use-ghci . t)
-     (haskell-indent-spaces . 4)
-     (eval when
-           (require
-            (quote rainbow-mode)
-            nil t)
-           (rainbow-mode 1)))))
- '(vc-annotate-background "#202020")
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#a40000")
-     (40 . "#dd0000")
-     (60 . "#ff8700")
-     (100 . "#ffad00")
-     (120 . "#ffd700")
-     (140 . "#8abd00")
-     (160 . "#9cd700")
-     (180 . "#9cd700")
-     (200 . "#afff00")
-     (220 . "#bdf800")
-     (240 . "#bdff0b")
-     (260 . "#87d7af")
-     (280 . "#79ADB0")
-     (300 . "#89C5C8")
-     (320 . "#5fafd7")
-     (340 . "#9CC7FB")
-     (360 . "#c61b6e"))))
- '(vc-annotate-very-old-color "#c61b6e")
- '(weechat-color-list
-   (unspecified "#272822" "#49483E" "#A20C41" "#F92672" "#67930F" "#A6E22E" "#968B26" "#E6DB74" "#21889B" "#66D9EF" "#A41F99" "#FD5FF0" "#349B8D" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
