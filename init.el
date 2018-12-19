@@ -6,7 +6,6 @@
 (require 'package)
 (setq package-list
       '(auto-complete
-	cmuscheme
         cider
         clojure-mode
         paredit
@@ -35,9 +34,25 @@
         yaml-mode
         yasnippet))
 
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+
 (package-initialize)
+
+(require 'neotree)
+(require 'helm-config)
+(require 'yaml-mode)
+(require 'powerline)
+(require 'rainbow-mode)
+(require 'flycheck)
+(require 'expand-region)
+(require 'gerbil)
+(require 'gambit)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;General Preferences ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 (setq font-use-system-font t)
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
@@ -46,14 +61,6 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;;General Preferences ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(require 'neotree)
-(require 'helm-config)
-(require 'yaml-mode)
-(require 'powerline)
 
 (electric-indent-mode +1)
 
@@ -65,7 +72,6 @@
 
 ;; color theme
 (load-theme 'wombat t)
-;; (load-theme 'whiteboard t)
 (powerline-default-theme)
 ;; For working on custom themes
 (defun what-face (pos)
@@ -73,9 +79,6 @@
   (let ((face (or (get-char-property (point) 'read-face-name)
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
-(require 'rainbow-mode)
-
-(require 'flycheck)
 (defun my/use-eslint-from-node-modules ()
   (let* ((root (locate-dominating-file
                 (or (buffer-file-name) default-directory)
@@ -100,7 +103,7 @@
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 (yas-global-mode t)
 
-(require 'expand-region)
+
 (global-set-key (kbd "C-=") 'er/expand-region)
 
 ;;;;;;;;;;;;
@@ -139,7 +142,6 @@
       '(lambda () (progn (set-variable 'indent-tabs-mode nil))))
 (add-hook 'js2-mode-hook 'tern-mode)
 (add-hook 'js2-mode-hook 'auto-complete-mode)
-          ;; (lambda () (tern-mode t)))
 
 (eval-after-load 'tern
   '(progn
@@ -165,25 +167,9 @@
 (with-eval-after-load 'go-mode
   (require 'go-autocomplete))
 
-
 ;;;;;;;;;;;
 ;; Lisps ;;
 ;;;;;;;;;;;
-
-(require 'gerbil)
-(require 'gambit)
-
-(setq scheme-default-implementation 'gambit)
-
-(eval-after-load 'scheme
-  '(define-key scheme-mode-map "\t" 'scheme-complete-or-indent))
-
-(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
-(add-hook 'scheme-mode-hook
-  (lambda ()
-    (make-local-variable 'eldoc-documentation-function)
-    (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
-    (eldoc-mode)))
 
 (add-to-list 'tags-table-list (format "%s/%s" (getenv "GERBIL_HOME") "src/TAGS"))
 
@@ -195,7 +181,6 @@
 (add-hook 'gerbil-mode-hook           #'enable-paredit-mode)
 
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'gerbil-mode-hook 'turn-on-eldoc-mode)
 
 ;;;;;;;;;;;;;;;;;;
 ;; Key Bindings ;;
@@ -276,20 +261,6 @@
 ;; Backup Files ;;
 ;;;;;;;;;;;;;;;;;;
 
-;; Fix issue w/ missing function in emacs 24
-;; http://stackoverflow.com/questions/11690980/why-cant-i-use-old-theme-style-file-under-emacs-24-1/14183331#14183331
-(if (>= emacs-major-version 24)
-    (defun plist-to-alist (the-plist)
-      (defun get-tuple-from-plist (the-plist)
-        (when the-plist
-          (cons (car the-plist) (cadr the-plist))))
-
-      (let ((alist '()))
-        (while the-plist
-          (add-to-list 'alist (get-tuple-from-plist the-plist))
-          (setq the-plist (cddr the-plist)))
-        alist)))
-
 ;; backup files in /.emacs.d/backups
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -299,3 +270,22 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
+
+;;;;;;;;;;;;
+;; Custom ;;
+;;;;;;;;;;;;
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yaml-mode tern-auto-complete tern neotree rust-mode restclient rainbow-mode racket-mode powerline nodejs-repl mvn multiple-cursors markdown-mode magit kotlin-mode js2-mode helm-c-yasnippet helm haskell-mode go-autocomplete go-mode flycheck expand-region paredit cider auto-complete))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
