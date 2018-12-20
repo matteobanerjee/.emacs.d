@@ -6,3 +6,5 @@ eshell
 elpa
 .DS_Store
 ac-comphist.dat
+.mc-lists.el
+recentf
