@@ -165,6 +165,38 @@
 ;; Lisps ;;
 ;;;;;;;;;;;
 
+;; copied from racket mode with modifications
+(defconst lambda-char (make-char 'greek-iso8859-7 107)
+  "Character inserted by `insert-labmda'.")
+
+(defun insert-lambda ()
+  (interactive)
+  (insert-char lambda-char 1))
+
+(defconst cust-paren-shapes ;; TODO: remove {?
+  '( (?\( ?\[ ?\] )
+     (?\[ ?\{ ?\} )
+     (?\{ ?\( ?\) ))
+  "This is not user-configurable because we expect them have to
+  have actual ?\( and ?\) char syntax.")
+
+(defun cycle-paren-shapes ()
+  "Cycle the sexpr among () [] {}."
+  (interactive)
+  (save-excursion
+    (unless (eq ?\( (char-syntax (char-after)))
+      (backward-up-list))
+    (pcase (assq (char-after) cust-paren-shapes)
+      (`(,_ ,open ,close)
+       (delete-char 1)
+       (insert open)
+       (backward-char 1)
+       (forward-sexp 1)
+       (backward-delete-char 1)
+       (insert close))
+      (_
+       (user-error "Don't know that paren shape")))))
+
 (add-to-list 'tags-table-list (format "%s/%s" (getenv "GERBIL_HOME") "src/TAGS"))
 
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
