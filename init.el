@@ -14,7 +14,6 @@
         flycheck
         doom-themes
         go-mode
-        go-autocomplete
         haskell-mode
         helm
         helm-c-yasnippet
@@ -83,6 +82,9 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
+(setq company-dabbrev-downcase 0)
+(setq company-idle-delay 0)
+
 (defun indent-or-complete ()
   (interactive)
   (if (looking-at "\\_>")
@@ -100,11 +102,11 @@
 (define-key input-decode-map "\e\eOA" [(meta up)])
 (define-key input-decode-map "\e\eOB" [(meta down)])
 
-(setq indent-tabs-mode nil)
 (show-paren-mode t)
-(setq show-paren-style 'expression)
+(setq show-paren-style 'parenthesis)
 (helm-mode 1)
 (helm-autoresize-mode t)
+
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 (yas-global-mode t)
@@ -141,9 +143,6 @@
   (append flycheck-disabled-checkers
           '(javascript-jshint)))
 
-
-(setq js2-mode-hook
-      '(lambda () (progn (set-variable 'indent-tabs-mode nil))))
 (add-hook 'js2-mode-hook 'tern-mode)
 
 ;;;;;;;;;
