@@ -26,14 +26,15 @@
         markdown-mode
         multiple-cursors
         mvn
+        neotree
         nodejs-repl
+        projectile
         powerline
         racket-mode
         rainbow-mode
         restclient
         rust-mode
         tern
-        treemacs
         yaml-mode
         yasnippet))
 
@@ -58,7 +59,8 @@
 (require 'gambit)
 (require 'company)
 (require 'doom-themes)
-(require 'treemacs)
+(require 'neotree)
+(require 'projectile)
 
 ;;;;;;;;;;;;;;;;;
 ;; Color Theme ;;
@@ -71,7 +73,7 @@
 (load-theme 'doom-opera t)
 
 (doom-themes-visual-bell-config)
-(doom-themes-treemacs-config)
+(doom-themes-neotree-config)
 (doom-themes-org-config)
 (powerline-default-theme)
 
@@ -95,6 +97,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General Preferences ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(projectile-mode +1)
+
 (setq-default indent-tabs-mode nil)
 (electric-indent-mode +1)
 (setq x-select-enable-clipboard t)
