@@ -102,7 +102,7 @@
 
 (setq indent-tabs-mode nil)
 (show-paren-mode t)
-;; (setq show-paren-style 'expression)
+(setq show-paren-style 'expression)
 (helm-mode 1)
 (helm-autoresize-mode t)
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
