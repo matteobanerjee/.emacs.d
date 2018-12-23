@@ -32,8 +32,8 @@
         rainbow-mode
         restclient
         rust-mode
-        neotree
         tern
+        treemacs
         yaml-mode
         yasnippet))
 
@@ -48,8 +48,6 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-
-(require 'neotree)
 (require 'helm-config)
 (require 'yaml-mode)
 (require 'powerline)
@@ -60,6 +58,7 @@
 (require 'gambit)
 (require 'company)
 (require 'doom-themes)
+(require 'treemacs)
 
 ;;;;;;;;;;;;;;;;;
 ;; Color Theme ;;
@@ -72,7 +71,7 @@
 (load-theme 'doom-opera t)
 
 (doom-themes-visual-bell-config)
-(doom-themes-neotree-config)
+(doom-themes-treemacs-config)
 (doom-themes-org-config)
 (powerline-default-theme)
 
@@ -104,6 +103,7 @@
 
 (show-paren-mode t)
 (setq show-paren-style 'parenthesis)
+
 (helm-mode 1)
 (helm-autoresize-mode t)
 
