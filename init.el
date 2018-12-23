@@ -5,19 +5,23 @@
 
 (require 'package)
 (setq package-list
-      '(auto-complete
-	cmuscheme
+      '(company
+        company-tern
         cider
         clojure-mode
         paredit
         expand-region
         flycheck
+        doom-themes
         go-mode
         go-autocomplete
         haskell-mode
         helm
         helm-c-yasnippet
+        json-mode
         js2-mode
+        jsx-mode
+	flow-minor-mode
         kotlin-mode
         magit
         markdown-mode
@@ -31,12 +35,12 @@
         rust-mode
         neotree
         tern
-        tern-auto-complete
         yaml-mode
         yasnippet))
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
+
 (setq font-use-system-font t)
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
@@ -44,6 +48,7 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+
 
 (require 'neotree)
 (require 'helm-config)
@@ -54,40 +59,46 @@
 (require 'expand-region)
 (require 'gerbil)
 (require 'gambit)
+(require 'company)
+(require 'doom-themes)
 
-(ac-config-default)
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;;General Preferences ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;
+;; Color Theme ;;
+;;;;;;;;;;;;;;;;;
 
+(setq load-prefer-newer t)         ;; helps with company mode
+(setq doom-themes-enable-bold t    ;; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ;; if nil, italics is universally disabled
+
+(load-theme 'doom-opera t)
+
+(doom-themes-visual-bell-config)
+(doom-themes-neotree-config)
+(doom-themes-org-config)
+(powerline-default-theme)
+
+;;;;;;;;;;;;;;;;;;
+;; Autocomplete ;;
+;;;;;;;;;;;;;;;;;;
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+(defun indent-or-complete ()
+  (interactive)
+  (if (looking-at "\\_>")
+      (company-complete-common)
+    (indent-according-to-mode)))
+
+(global-set-key "\t" 'indent-or-complete)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; General Preferences ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq-default indent-tabs-mode nil)
 (electric-indent-mode +1)
-
 (setq x-select-enable-clipboard t)
 (define-key input-decode-map "\e\eOA" [(meta up)])
 (define-key input-decode-map "\e\eOB" [(meta down)])
-
-(setq tab-always-indent 'complete)
-
-;; color theme
-(load-theme 'wombat t)
-(powerline-default-theme)
-;; For working on custom themes
-(defun what-face (pos)
-  (interactive "d")
-  (let ((face (or (get-char-property (point) 'read-face-name)
-                  (get-char-property (point) 'face))))
-    (if face (message "Face: %s" face) (message "No face at %d" pos))))
-(defun my/use-eslint-from-node-modules ()
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules"))
-         (eslint (and root
-                      (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                        root))))
-    (when (and eslint (file-executable-p eslint))
-      (setq-local flycheck-javascript-eslint-executable eslint))))
-
-(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (setq indent-tabs-mode nil)
 (show-paren-mode t)
@@ -97,7 +108,6 @@
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 (yas-global-mode t)
-
 (global-set-key (kbd "C-=") 'er/expand-region)
 
 ;;;;;;;;;;;;
@@ -118,7 +128,7 @@
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
-
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 (add-hook 'js2-mode-hook 'flycheck-mode)
 (add-hook 'js2-jsx-mode-hook 'flycheck-mode)
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
@@ -135,12 +145,7 @@
 (setq js2-mode-hook
       '(lambda () (progn (set-variable 'indent-tabs-mode nil))))
 (add-hook 'js2-mode-hook 'tern-mode)
-(add-hook 'js2-mode-hook 'auto-complete-mode)
 
-(eval-after-load 'tern
-  '(progn
-     (require 'tern-auto-complete)
-           (tern-ac-setup)))
 ;;;;;;;;;
 ;; XML ;;
 ;;;;;;;;;
@@ -157,9 +162,6 @@
 (defun auto-complete-for-go ()
   (auto-complete-mode 1))
 (add-hook 'go-mode-hook 'auto-complete-for-go)
-
-(with-eval-after-load 'go-mode
-  (require 'go-autocomplete))
 
 ;;;;;;;;;;;
 ;; Lisps ;;
@@ -200,6 +202,7 @@
 (add-to-list 'tags-table-list (format "%s/%s" (getenv "GERBIL_HOME") "src/TAGS"))
 
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'racket-mode-hook       #'enable-paredit-mode)
 (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
@@ -300,7 +303,6 @@
 ;;;;;;;;;;;;
 ;; Custom ;;
 ;;;;;;;;;;;;
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -308,7 +310,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode tern-auto-complete tern neotree rust-mode restclient rainbow-mode racket-mode powerline nodejs-repl mvn multiple-cursors markdown-mode magit kotlin-mode js2-mode helm-c-yasnippet helm haskell-mode go-autocomplete go-mode flycheck expand-region paredit cider auto-complete))))
+    (yaml-mode neotree rust-mode restclient rainbow-mode racket-mode powerline nodejs-repl mvn multiple-cursors markdown-mode magit kotlin-mode flow-minor-mode jsx-mode js2-mode json-mode helm-c-yasnippet helm haskell-mode go-autocomplete go-mode doom-themes flycheck expand-region paredit cider company-tern company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
