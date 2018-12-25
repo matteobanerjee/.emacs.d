@@ -207,15 +207,18 @@
 (add-to-list 'tags-table-list (format "%s/%s" (getenv "GERBIL_HOME") "src/TAGS"))
 
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-(add-hook 'racket-mode-hook       #'enable-paredit-mode)
+(add-hook 'racket-mode-hook           #'enable-paredit-mode)
 (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 (add-hook 'gerbil-mode-hook           #'enable-paredit-mode)
-
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 
+;; C-c C-. doesn't work in Tilix, rebind racket define to C-c C-d
+(add-hook 'racket-mode-hook
+          (lambda ()
+            (define-key racket-mode-map (kbd "C-c C-d") 'racket-describe)))
 ;;;;;;;;;;;;;;;;;;
 ;; Key Bindings ;;
 ;;;;;;;;;;;;;;;;;;
