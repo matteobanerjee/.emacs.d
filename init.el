@@ -83,7 +83,7 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-(setq company-dabbrev-downcase 0)
+(setq company-dabbrev-downcase nil)
 (setq company-idle-delay 0)
 
 (defun indent-or-complete ()
@@ -280,7 +280,7 @@
 ;;;;;;;;;;;;;
 
 (setq whitespace-style
-  (quote (face trailing lines-tail)))
+  (quote (face trailing)))
 (add-hook 'find-file-hook 'whitespace-mode)
 
 ;; transform literal tabs into a right-pointing triangle
