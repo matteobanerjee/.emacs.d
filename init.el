@@ -18,9 +18,13 @@
         helm
         helm-c-yasnippet
         json-mode
+        lsp-mode
+        company-lsp
         js2-mode
         jsx-mode
+        lsp-javascript-flow
 	flow-minor-mode
+	;; flycheck-flow
         kotlin-mode
         magit
         markdown-mode
@@ -29,6 +33,7 @@
         neotree
         nodejs-repl
         projectile
+        color-theme-sanityinc-tomorrow
         powerline
         racket-mode
         rainbow-mode
@@ -67,14 +72,9 @@
 ;;;;;;;;;;;;;;;;;
 
 (setq load-prefer-newer t)         ;; helps with company mode
-(setq doom-themes-enable-bold t    ;; if nil, bold is universally disabled
-      doom-themes-enable-italic t) ;; if nil, italics is universally disabled
 
-(load-theme 'doom-opera t)
+(load-theme 'sanityinc-tomorrow-night t)
 
-(doom-themes-visual-bell-config)
-(doom-themes-neotree-config)
-(doom-themes-org-config)
 (powerline-default-theme)
 
 ;;;;;;;;;;;;;;;;;;
@@ -136,8 +136,13 @@
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
-(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+(require 'lsp-mode)
+(require 'flycheck-flow)
+(add-hook 'js2-mode-hook #'lsp)
 (add-hook 'js2-mode-hook 'flycheck-mode)
+
+(add-hook 'js2-mode-hook 'flow-minor-enable-automatically)
+;; (add-hook 'js2-jsx-mode-hook 'flow-minor-enable-automatically)
 (add-hook 'js2-jsx-mode-hook 'flycheck-mode)
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
 (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
@@ -149,7 +154,6 @@
   (append flycheck-disabled-checkers
           '(javascript-jshint)))
 
-(add-hook 'js2-mode-hook 'tern-mode)
 
 ;;;;;;;;;
 ;; XML ;;

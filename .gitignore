@@ -10,3 +10,4 @@ ac-comphist.dat
 recentf
 .cache
 projectile-bookmarks.eld
+.lsp-session-*
