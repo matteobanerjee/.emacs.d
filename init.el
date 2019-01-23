@@ -6,13 +6,10 @@
 (require 'package)
 (setq package-list
       '(company
-        company-tern
-        cider
         clojure-mode
         paredit
         expand-region
         flycheck
-        doom-themes
         go-mode
         haskell-mode
         helm
@@ -23,8 +20,8 @@
         js2-mode
         jsx-mode
         lsp-javascript-flow
-	flow-minor-mode
-	;; flycheck-flow
+        flow-minor-mode
+        flycheck-flow
         kotlin-mode
         magit
         markdown-mode
@@ -36,10 +33,8 @@
         color-theme-sanityinc-tomorrow
         powerline
         racket-mode
-        rainbow-mode
         restclient
         rust-mode
-        tern
         yaml-mode
         yasnippet))
 
@@ -66,6 +61,8 @@
 (require 'doom-themes)
 (require 'neotree)
 (require 'projectile)
+(require 'lsp-mode)
+(require 'flycheck-flow)
 
 ;;;;;;;;;;;;;;;;;
 ;; Color Theme ;;
@@ -136,8 +133,6 @@
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
-(require 'lsp-mode)
-(require 'flycheck-flow)
 (add-hook 'js2-mode-hook #'lsp)
 (add-hook 'js2-mode-hook 'flycheck-mode)
 
@@ -223,6 +218,7 @@
 (add-hook 'racket-mode-hook
           (lambda ()
             (define-key racket-mode-map (kbd "C-c C-d") 'racket-describe)))
+
 ;;;;;;;;;;;;;;;;;;
 ;; Key Bindings ;;
 ;;;;;;;;;;;;;;;;;;
