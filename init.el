@@ -130,6 +130,12 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
+;;;;;;;;;;;;
+;; Kotlin ;;
+;;;;;;;;;;;;
+
+(setq kotlin-tab-width 4)
+
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
@@ -311,17 +317,7 @@
 ;;;;;;;;;;;;
 ;; Custom ;;
 ;;;;;;;;;;;;
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (yaml-mode neotree rust-mode restclient rainbow-mode racket-mode powerline nodejs-repl mvn multiple-cursors markdown-mode magit kotlin-mode flow-minor-mode jsx-mode js2-mode json-mode helm-c-yasnippet helm haskell-mode go-autocomplete go-mode doom-themes flycheck expand-region paredit cider company-tern company))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Keep custom-set-variables in a different file
+(setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
