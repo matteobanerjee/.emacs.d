@@ -135,7 +135,10 @@
 ;;;;;;;;;;;;
 
 (setq kotlin-tab-width 4)
-
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection "kotlin-language-server")
+                  :major-modes '(kotlin-mode)
+                  :server-id 'kotlin-language-server))
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
