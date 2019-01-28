@@ -5,7 +5,8 @@
 
 (require 'package)
 (setq package-list
-      '(company
+      '(bazel-mode
+        company
         clojure-mode
         paredit
         expand-region
