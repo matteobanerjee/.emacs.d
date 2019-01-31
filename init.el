@@ -124,6 +124,14 @@
 (add-hook 'python-mode-hook 'flycheck-mode)
 ;; TODO: make ipython default shell
 
+;;;;;;;;;;;
+;; Bazel ;;
+;;;;;;;;;;;
+
+(add-to-list 'auto-mode-alist '("\\.bzl$" . bazel-mode))
+(add-to-list 'auto-mode-alist '("BUILD$" . bazel-mode))
+(add-to-list 'auto-mode-alist '("WORKSPACE$" . web-mode))
+
 ;;;;;;;;;;;;;
 ;; Haskell ;;
 ;;;;;;;;;;;;;
