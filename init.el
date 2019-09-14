@@ -4,10 +4,15 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 (require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/") t)
+
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(package-initialize)
+
+
 (setq package-list
-      '(bazel-mode
-        company
-        clojure-mode
+      '(clojure-mode
         paredit
         expand-region
         flycheck
@@ -17,21 +22,15 @@
         helm-c-yasnippet
         json-mode
         lsp-mode
-        company-lsp
         js2-mode
         jsx-mode
-        lsp-javascript-flow
-        flow-minor-mode
-        flycheck-flow
-        kotlin-mode
         magit
         markdown-mode
-        multiple-cursors
         mvn
         neotree
         nodejs-repl
         projectile
-        color-theme-sanityinc-tomorrow
+        python-mode
         powerline
         racket-mode
         restclient
@@ -40,8 +39,6 @@
         yaml-mode
         yasnippet))
 
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
 
 (setq font-use-system-font t)
 (or (file-exists-p package-user-dir)
@@ -54,17 +51,12 @@
 (require 'helm-config)
 (require 'yaml-mode)
 (require 'powerline)
-(require 'rainbow-mode)
 (require 'flycheck)
 (require 'expand-region)
 (require 'gerbil)
 (require 'gambit)
-(require 'company)
-(require 'doom-themes)
 (require 'neotree)
 (require 'projectile)
-(require 'lsp-mode)
-(require 'flycheck-flow)
 
 ;;;;;;;;;;;;;;;;;
 ;; Color Theme ;;
@@ -72,7 +64,8 @@
 
 (setq load-prefer-newer t)         ;; helps with company mode
 
-(load-theme 'sanityinc-tomorrow-night t)
+(load-theme 'wombat t)
+
 
 (powerline-default-theme)
 
@@ -80,18 +73,18 @@
 ;; Autocomplete ;;
 ;;;;;;;;;;;;;;;;;;
 
-(add-hook 'after-init-hook 'global-company-mode)
+;; (add-hook 'after-init-hook 'global-company-mode)
 
-(setq company-dabbrev-downcase nil)
-(setq company-idle-delay 0)
+;; (setq company-dabbrev-downcase nil)
+;; (setq company-idle-delay 0)
 
-(defun indent-or-complete ()
-  (interactive)
-  (if (looking-at "\\_>")
-      (company-complete-common)
-    (indent-according-to-mode)))
+;; (defun indent-or-complete ()
+;;   (interactive)
+;;   (if (looking-at "\\_>")
+;;       (company-complete-common)
+;;     (indent-according-to-mode)))
 
-(global-set-key "\t" 'indent-or-complete)
+;; (global-set-key "\t" 'indent-or-complete)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General Preferences ;;;
@@ -120,8 +113,12 @@
 ;;;;;;;;;;;;
 ;; Python ;;
 ;;;;;;;;;;;;
-
+(autoload 'python-mode "python-mode" "Python Mode." t)
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+(setq python-shell-interpreter "python3")
 (add-hook 'python-mode-hook 'flycheck-mode)
+
 ;; TODO: make ipython default shell
 
 ;;;;;;;;;;;
@@ -140,15 +137,6 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
-;;;;;;;;;;;;
-;; Kotlin ;;
-;;;;;;;;;;;;
-
-(setq kotlin-tab-width 4)
-(lsp-register-client
- (make-lsp-client :new-connection (lsp-stdio-connection "kotlin-language-server")
-                  :major-modes '(kotlin-mode)
-                  :server-id 'kotlin-language-server))
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
