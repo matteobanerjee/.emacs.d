@@ -21,15 +21,11 @@
         helm
         helm-c-yasnippet
         json-mode
-        lsp-mode
-        js2-mode
-        jsx-mode
         magit
         markdown-mode
         mvn
         neotree
         nodejs-repl
-        projectile
         python-mode
         powerline
         racket-mode
@@ -53,10 +49,7 @@
 (require 'powerline)
 (require 'flycheck)
 (require 'expand-region)
-(require 'gerbil)
-(require 'gambit)
 (require 'neotree)
-(require 'projectile)
 
 ;;;;;;;;;;;;;;;;;
 ;; Color Theme ;;
@@ -69,29 +62,9 @@
 
 (powerline-default-theme)
 
-;;;;;;;;;;;;;;;;;;
-;; Autocomplete ;;
-;;;;;;;;;;;;;;;;;;
-
-;; (add-hook 'after-init-hook 'global-company-mode)
-
-;; (setq company-dabbrev-downcase nil)
-;; (setq company-idle-delay 0)
-
-;; (defun indent-or-complete ()
-;;   (interactive)
-;;   (if (looking-at "\\_>")
-;;       (company-complete-common)
-;;     (indent-according-to-mode)))
-
-;; (global-set-key "\t" 'indent-or-complete)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General Preferences ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(projectile-mode +1)
 
 (setq-default indent-tabs-mode nil)
 (electric-indent-mode +1)
@@ -140,22 +113,6 @@
 ;;;;;;;;;;;;;;;;
 ;; JavaScript ;;
 ;;;;;;;;;;;;;;;;
-
-;; (add-hook 'js2-mode-hook #'lsp)
-;; (add-hook 'js2-mode-hook 'flycheck-mode)
-
-;; (add-hook 'js2-mode-hook 'flow-minor-enable-automatically)
-;; ;; (add-hook 'js2-jsx-mode-hook 'flow-minor-enable-automatically)
-;; (add-hook 'js2-jsx-mode-hook 'flycheck-mode)
-;; (flycheck-add-mode 'javascript-eslint 'js2-mode)
-;; (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
-
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
-
-;; (setq-default flycheck-disabled-checkers
-;;   (append flycheck-disabled-checkers
-;;           '(javascript-jshint)))
 
 (require 'web-mode)
 
@@ -237,7 +194,6 @@
       (_
        (user-error "Don't know that paren shape")))))
 
-(add-to-list 'tags-table-list (format "%s/%s" (getenv "GERBIL_HOME") "src/TAGS"))
 
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
 (add-hook 'racket-mode-hook           #'enable-paredit-mode)
@@ -245,7 +201,6 @@
 (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-(add-hook 'gerbil-mode-hook           #'enable-paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 
 ;; C-c C-. doesn't work in Tilix, rebind racket define to C-c C-d
