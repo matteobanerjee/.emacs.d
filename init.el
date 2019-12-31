@@ -16,14 +16,12 @@
         paredit
         expand-region
         flycheck
-        go-mode
         haskell-mode
         helm
-        helm-c-yasnippet
+        helm-ag
         json-mode
         magit
         markdown-mode
-        mvn
         neotree
         nodejs-repl
         python-mode
@@ -32,8 +30,7 @@
         restclient
         rust-mode
         web-mode
-        yaml-mode
-        yasnippet))
+        yaml-mode))
 
 
 (setq font-use-system-font t)
@@ -51,15 +48,13 @@
 (require 'expand-region)
 (require 'neotree)
 
+
 ;;;;;;;;;;;;;;;;;
 ;; Color Theme ;;
 ;;;;;;;;;;;;;;;;;
 
 (setq load-prefer-newer t)         ;; helps with company mode
-
 (load-theme 'wombat t)
-
-
 (powerline-default-theme)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -86,21 +81,10 @@
 ;;;;;;;;;;;;
 ;; Python ;;
 ;;;;;;;;;;;;
-(autoload 'python-mode "python-mode" "Python Mode." t)
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
-(setq python-shell-interpreter "python3")
-(add-hook 'python-mode-hook 'flycheck-mode)
+;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+;; (add-hook 'python-mode-hook 'flycheck-mode)
 
 ;; TODO: make ipython default shell
-
-;;;;;;;;;;;
-;; Bazel ;;
-;;;;;;;;;;;
-
-(add-to-list 'auto-mode-alist '("\\.bzl$" . bazel-mode))
-(add-to-list 'auto-mode-alist '("BUILD$" . bazel-mode))
-(add-to-list 'auto-mode-alist '("WORKSPACE$" . web-mode))
 
 ;;;;;;;;;;;;;
 ;; Haskell ;;
@@ -149,14 +133,6 @@
  nxml-child-indent 4
  nxml-attribute-indent 4
  nxml-slash-auto-complete-flag t)
-
-;;;;;;;;
-;; GO ;;
-;;;;;;;;
-
-(defun auto-complete-for-go ()
-  (auto-complete-mode 1))
-(add-hook 'go-mode-hook 'auto-complete-for-go)
 
 ;;;;;;;;;;;
 ;; Lisps ;;
