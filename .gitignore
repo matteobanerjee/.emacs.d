@@ -12,3 +12,4 @@ recentf
 projectile-bookmarks.eld
 .lsp-session-*
 .custom.el
+transient/
